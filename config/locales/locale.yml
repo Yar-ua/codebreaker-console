@@ -37,3 +37,8 @@ en:
   lose_message: "You are lose win in the game -( "
   secret_code: "Secret code was: "
   new_game: "Start new game (input 'yes') or exit to menu?"
+  save_result: "Do You want to save game results? If yes, input 'yes'"
+  hint: "You take a hint: "
+  game_hints: ", hints: "
+  game_status: "---Game status: attempts: "
+  notice: "NOTICE: "

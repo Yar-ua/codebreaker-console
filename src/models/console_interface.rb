@@ -1,8 +1,10 @@
 class ConsoleInterface
   include IOHelper
+  include SaveLoadHelper
 
   def initialize
     @console_game = nil
+    @winner = nil
   end
 
   def start
@@ -30,10 +32,11 @@ class ConsoleInterface
   end
 
   def game_process
-    puts @console_game.game.code    ###debug
+    # puts @console_game.game.code    ###debug line
     @console_game.run
     check_response
-    puts @console_game.response ###if :ok or :hint or :no_hint
+    print_game_status(@console_game.game)
+    print_response(@console_game.response)
     game_process
   end
 
@@ -44,6 +47,8 @@ class ConsoleInterface
 
   def win
     puts I18n.t(:win_message) + I18n.t(:secret_code) + @console_game.game.code
+    @winner = @console_game.response[:message]
+    save_result
     new_game_or_menu
   end
 
@@ -57,8 +62,13 @@ class ConsoleInterface
     yes? ? game_start : run
   end
 
+  def save_result
+    puts I18n.t(:save_result)
+    save_to_db(@winner) if yes?
+  end
+
   def yes?
-    user_input == "yes" || "y"
+    user_input == "yes" ? true : false
   end
 end
 
