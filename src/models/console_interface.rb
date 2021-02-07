@@ -1,11 +1,18 @@
 class ConsoleInterface
   include IOHelper
-  include Game
+
+  def initialize
+    @console_game = nil
+  end
+
+  def start
+    welcome
+    run
+  end
 
   def run
     hello
-    input = user_input
-    case input
+    case user_input
     when "start" then game_start
     when "rules" then game_rules
     when "stats" then game_statistic
@@ -13,96 +20,46 @@ class ConsoleInterface
     else
       unknown_input
     end
-  end
-
-  private 
-
-  def hello
-    puts I18n.t(:game_hello)
-  end
-
-  def game_rules
-    puts I18n.t(:game_rules)
-    run
-  end
-
-  def game_statistic
-    puts I18n.t(:game_statistic)
-    run
-  end
-
-  def unknown_input
-    puts I18n.t(:unknown_input)
     run
   end
 
   def game_start
     puts I18n.t(:game_start)
-    game_init
-    game_run
+    @console_game = ConsoleGame.new
+    game_process
   end
 
+  def game_process
+    puts @console_game.game.code    ###debug
+    @console_game.run
+    check_response
+    puts @console_game.response ###if :ok or :hint or :no_hint
+    game_process
+  end
 
+  def check_response
+    win if @console_game.response[:status] == :win
+    lose if @console_game.response[:status] == :lose
+  end
+
+  def win
+    puts I18n.t(:win_message) + I18n.t(:secret_code) + @console_game.game.code
+    new_game_or_menu
+  end
+
+  def lose
+    puts I18n.t(:lose_message) + I18n.t(:secret_code) + @console_game.game.code
+    new_game_or_menu
+  end
+
+  def new_game_or_menu
+    puts I18n.t(:new_game)
+    yes? ? game_start : run
+  end
+
+  def yes?
+    user_input == "yes" || "y"
+  end
 end
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def user_input
-#   gets.chomp.strip.downcase
-# end
-
-# def user_registration
-#   puts 'Enter username'
-#   @user = Codebreaker::User.new(user_input)
-# rescue EmptyValueError, WrongTypeError, UserError => e
-#   puts "NOTICE: #{e.message}"
-#   user_registration
-# end
-
-# def game_init
-#   @game = Codebreaker::Game.new(@user)
-# end
-
-# def show_response
-#   puts @response
-# end
-
-# def run_game
-#   puts "input your guess of code or input 'hint' to take a hint"
-#   @response = @game.run(user_input)
-#   case @response[:status]
-#   when :win then win_game
-#   when :lose then lose_game
-#   else
-#     show_response
-#     run_game
-#   end
-# end
-
-
-
-# hello
-# user_registration
-# puts @user.inspect
-
-# game_init
-# puts @game.inspect
-
-# run_game
-# puts @response
-# puts @response[:status]

@@ -1,7 +1,7 @@
 en:
-  game_start: "TODO: game start"
-  game_hello: "Welcome to Gamebreaker console game!\n
-               Make your choice\n
+  welcome: "Welcome to Gamebreaker console game!\n"
+  game_start: "Starting new game\n"
+  game_hello: "Make your choice\n
                'start' - for start game\n
                'rules' - for game rules\n
                'stats' - for game statistoc of players\n
@@ -30,3 +30,10 @@ en:
   game_statistic: "TODO game statistic\n\n"
   game_exit: "Good bye!"
   unknown_input: "unknown input command, try again\n\n"
+  user_registration: "User registration. Input user name (3-20 symbols):\n"
+  choose_level: "Choose game level: input 'easy', 'medium' or 'hard'\n"
+  input_guess: "Input Your guess (4 digits between 1 and 6)\n"
+  win_message: "Congratulations! You are win in the game! "
+  lose_message: "You are lose win in the game -( "
+  secret_code: "Secret code was: "
+  new_game: "Start new game (input 'yes') or exit to menu?"
