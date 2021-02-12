@@ -12,8 +12,12 @@ module IOHelper
     puts I18n.t(:game_rules)
   end
 
-  def game_statistic
+  def print_statistic(sorted_stats)
     puts I18n.t(:game_statistic)
+    table = TTY::Table.new
+    table << ["difficulty", "name", "attempts used", "attempts", "hints used", "hints"] 
+    sorted_stats.each { |s| table << [s.difficulty, s.name, s.attempts_used, s.attempts, s.hints_used, s.hints] }
+    puts TTY::Table::Renderer::Unicode.new(table).render
   end
 
   def unknown_input
@@ -25,7 +29,7 @@ module IOHelper
   end
 
   def notice(message)
-    puts I18n.t(:notice) + message
+    puts (I18n.t(:notice) + message).colorize(:red)
   end
   
   def game_exit
@@ -34,12 +38,12 @@ module IOHelper
   end
 
   def print_response(response)
-    puts response[:message] if response[:status] == :ok
-    puts I18n.t(:hint) + response[:message] if response[:status] == :hint
+    puts response[:message].colorize(:green) if response[:status] == :ok
+    puts (I18n.t(:hint) + response[:message].to_s).colorize(:green) if response[:status] == :hint
   end
 
   def print_game_status(game)
-    puts I18n.t(:game_status) + game.attempts.to_s + I18n.t(:hints) + game.hints.to_s
+    puts (I18n.t(:game_status) + game.attempts.to_s + I18n.t(:game_hints) + game.hints.to_s).colorize(:blue)
   end
 
 end

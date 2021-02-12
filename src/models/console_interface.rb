@@ -2,17 +2,21 @@ class ConsoleInterface
   include IOHelper
   include SaveLoadHelper
 
+  attr_reader :console_game, :stats
+
+  DIFFICULTY_ORDER = ["hard", "medium", "easy"]
+
   def initialize
     @console_game = nil
-    @winner = nil
+    @stats = load_from_db
   end
 
   def start
     welcome
-    run
+    run_loop
   end
 
-  def run
+  def run_loop
     hello
     case user_input
     when "start" then game_start
@@ -22,7 +26,7 @@ class ConsoleInterface
     else
       unknown_input
     end
-    run
+    run_loop
   end
 
   def game_start
@@ -32,8 +36,7 @@ class ConsoleInterface
   end
 
   def game_process
-    # puts @console_game.game.code    ###debug line
-    @console_game.run
+    @console_game.run_loop
     check_response
     print_game_status(@console_game.game)
     print_response(@console_game.response)
@@ -47,8 +50,8 @@ class ConsoleInterface
 
   def win
     puts I18n.t(:win_message) + I18n.t(:secret_code) + @console_game.game.code
-    @winner = @console_game.response[:message]
-    save_result
+    @stats << Stats.new(@console_game.user, @console_game.response[:message])
+    save_result(@stats)
     new_game_or_menu
   end
 
@@ -59,17 +62,23 @@ class ConsoleInterface
 
   def new_game_or_menu
     puts I18n.t(:new_game)
-    yes? ? game_start : run
+    yes? ? game_start : run_loop
   end
 
-  def save_result
+  def save_result(stats)
     puts I18n.t(:save_result)
-    save_to_db(@winner) if yes?
+    save_to_db(stats) if yes?
   end
 
   def yes?
     user_input == "yes" ? true : false
   end
+
+  def game_statistic
+    sorted_stats = @stats
+    sorted_stats.sort! { |a, b| [a.attempts_used, a.hints_used] <=> [b.attempts_used, b.hints_used] }
+    sorted_stats.sort_by! { |d| DIFFICULTY_ORDER.index d.difficulty}
+    print_statistic(sorted_stats)
+  end
+
 end
-
-

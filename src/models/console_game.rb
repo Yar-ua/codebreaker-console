@@ -27,7 +27,7 @@ class ConsoleGame
 
   def user_registration
     puts I18n.t(:user_registration)
-    Codebreaker::User.new(user_input)
+    User.new(user_input)
   rescue => e
     notice(e.message)
     user_registration
@@ -35,7 +35,7 @@ class ConsoleGame
 
   def create_game
     puts I18n.t(:choose_level)
-    Codebreaker::Game.new(@user, user_input)
+    Codebreaker::Game.new(user_input)
   rescue => e
     notice(e.message)
     create_game

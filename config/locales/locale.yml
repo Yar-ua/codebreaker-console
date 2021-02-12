@@ -27,12 +27,12 @@ en:
               If codebreaker inputs the exact number as a secret number - codebreaker wins the game.\n
               If all attempts are spent - codebreaker loses. 0Codebreaker also has some number of hints \n
               (depends on chosen difficulty). If a user takes a hint - he receives back a separate digit of the secret code.\n\n"
-  game_statistic: "TODO game statistic\n\n"
+  game_statistic: "Users gamestatistic:\n"
   game_exit: "Good bye!"
   unknown_input: "unknown input command, try again\n\n"
   user_registration: "User registration. Input user name (3-20 symbols):\n"
   choose_level: "Choose game level: input 'easy', 'medium' or 'hard'\n"
-  input_guess: "Input Your guess (4 digits between 1 and 6)\n"
+  input_guess: "\nInput Your guess (4 digits between 1 and 6)\n"
   win_message: "Congratulations! You are win in the game! "
   lose_message: "You are lose win in the game -( "
   secret_code: "Secret code was: "
@@ -40,5 +40,5 @@ en:
   save_result: "Do You want to save game results? If yes, input 'yes'"
   hint: "You take a hint: "
   game_hints: ", hints: "
-  game_status: "---Game status: attempts: "
+  game_status: "==> Game status: attempts: "
   notice: "NOTICE: "
