@@ -1,10 +1,9 @@
 class ConsoleInterface
   include IOHelper
   include SaveLoadHelper
+  include Constants
 
   attr_reader :console_game, :stats
-
-  DIFFICULTY_ORDER = ["hard", "medium", "easy"]
 
   def initialize
     @console_game = nil
@@ -16,13 +15,15 @@ class ConsoleInterface
     run_loop
   end
 
+  private
+  
   def run_loop
     hello
     case user_input
-    when "start" then game_start
-    when "rules" then game_rules
-    when "stats" then game_statistic
-    when "exit" then game_exit
+    when START then game_start
+    when RULES then game_rules
+    when STATS then game_statistic
+    when EXIT then game_exit
     else
       unknown_input
     end
@@ -36,7 +37,7 @@ class ConsoleInterface
   end
 
   def game_process
-    @console_game.run_loop
+    @console_game.run
     check_response
     print_game_status(@console_game.game)
     print_response(@console_game.response)
@@ -71,14 +72,13 @@ class ConsoleInterface
   end
 
   def yes?
-    user_input == "yes" ? true : false
+    user_input == YES
   end
 
   def game_statistic
     sorted_stats = @stats
     sorted_stats.sort! { |a, b| [a.attempts_used, a.hints_used] <=> [b.attempts_used, b.hints_used] }
-    sorted_stats.sort_by! { |d| DIFFICULTY_ORDER.index d.difficulty}
+    sorted_stats.sort_by! { |d| DIFFICULTY_ORDER.index d.difficulty }
     print_statistic(sorted_stats)
   end
-
 end

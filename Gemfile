@@ -1,9 +1,15 @@
-source "https://rubygems.org"
+# frozen_string_literal: true
 
-git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+source 'https://rubygems.org'
 
-gem 'pry'
-gem 'codebreaker21rg', git: 'https://github.com/Yar-ua/codebreaker21rg' , branch: 'dev'
-gem 'i18n'
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
+
+gem 'codebreaker21rg', git: 'https://github.com/Yar-ua/codebreaker21rg', branch: 'dev'
 gem 'colorize'
-gem "tty-table"
+gem 'i18n'
+gem 'pry'
+gem 'rspec', require: false
+gem 'rubocop', require: false
+gem 'rubocop-rspec', require: false
+gem 'simplecov', require: false
+gem 'tty-table'

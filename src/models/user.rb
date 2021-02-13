@@ -1,4 +1,5 @@
 class User
+  include Constants
   attr_accessor :name
 
   def initialize(name)
@@ -9,6 +10,6 @@ class User
   private
 
   def validate(name)
-    raise UserError.new "Name length must be between 3 and 20" if (name.length < 3 ) || (name.length > 20)
+    raise UserError, USER_ERROR if (name.length < 3) || (name.length > 20)
   end
 end

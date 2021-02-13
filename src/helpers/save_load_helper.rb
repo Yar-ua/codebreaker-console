@@ -4,6 +4,12 @@ module SaveLoadHelper
   end
 
   def load_from_db
-    File.exist?('./db/top_users.yml') ? File.open(File.expand_path('top_users.yml', 'db')) { |file| YAML.safe_load(file, [Stats], [], true) } : []
+    if File.exist?('./db/top_users.yml')
+      File.open(File.expand_path('top_users.yml', 'db')) do |file|
+        YAML.safe_load(file, [Stats], [], true)
+      end
+    else
+      []
+    end
   end
 end

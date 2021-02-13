@@ -1,4 +1,5 @@
 module IOHelper
+  include Constants
 
   def welcome
     puts I18n.t(:welcome)
@@ -15,8 +16,10 @@ module IOHelper
   def print_statistic(sorted_stats)
     puts I18n.t(:game_statistic)
     table = TTY::Table.new
-    table << ["difficulty", "name", "attempts used", "attempts", "hints used", "hints"] 
-    sorted_stats.each { |s| table << [s.difficulty, s.name, s.attempts_used, s.attempts, s.hints_used, s.hints] }
+    table << TABLE_HEADER
+    sorted_stats.each do |s|
+      table << [s.difficulty, s.name, s.attempts_used, s.attempts_total, s.hints_used, s.hints_total]
+    end
     puts TTY::Table::Renderer::Unicode.new(table).render
   end
 
@@ -31,7 +34,7 @@ module IOHelper
   def notice(message)
     puts (I18n.t(:notice) + message).colorize(:red)
   end
-  
+
   def game_exit
     puts I18n.t(:game_exit)
     abort
@@ -45,5 +48,4 @@ module IOHelper
   def print_game_status(game)
     puts (I18n.t(:game_status) + game.attempts.to_s + I18n.t(:game_hints) + game.hints.to_s).colorize(:blue)
   end
-
 end
