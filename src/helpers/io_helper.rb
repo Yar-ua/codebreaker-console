@@ -14,12 +14,12 @@ module IOHelper
   end
 
   def print_statistic(sorted_stats)
-    puts I18n.t(:game_statistic)
     table = TTY::Table.new
     table << TABLE_HEADER
     sorted_stats.each do |s|
       table << [s.difficulty, s.name, s.attempts_used, s.attempts_total, s.hints_used, s.hints_total]
     end
+    puts I18n.t(:game_statistic)
     puts TTY::Table::Renderer::Unicode.new(table).render
   end
 
@@ -38,6 +38,7 @@ module IOHelper
   def game_exit
     puts I18n.t(:game_exit)
     abort
+    # exit(0)
   end
 
   def print_response(response)
@@ -48,4 +49,5 @@ module IOHelper
   def print_game_status(game)
     puts (I18n.t(:game_status) + game.attempts.to_s + I18n.t(:game_hints) + game.hints.to_s).colorize(:blue)
   end
+
 end

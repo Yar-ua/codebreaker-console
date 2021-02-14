@@ -1,11 +1,11 @@
 module SaveLoadHelper
-  def save_to_db(stats)
-    File.open(File.expand_path('top_users.yml', 'db'), 'w') { |file| file.write(stats.to_yaml) }
+  def save_to_db(stats, db_file)
+    File.open("./db/#{db_file}", 'w') { |file| file.write(stats.to_yaml) }
   end
 
-  def load_from_db
-    if File.exist?('./db/top_users.yml')
-      File.open(File.expand_path('top_users.yml', 'db')) do |file|
+  def load_from_db(db_file)
+    if File.exist?("./db/#{db_file}")
+      File.open("./db/#{db_file}") do |file|
         YAML.safe_load(file, [Stats], [], true)
       end
     else

@@ -3,11 +3,12 @@ class ConsoleInterface
   include SaveLoadHelper
   include Constants
 
-  attr_reader :console_game, :stats
+  attr_reader :config, :console_game, :stats
 
-  def initialize
+  def initialize(config)
+    @config = config
     @console_game = nil
-    @stats = load_from_db
+    @stats = load_from_db(@config['db_file'])
   end
 
   def start
@@ -16,7 +17,7 @@ class ConsoleInterface
   end
 
   private
-  
+
   def run_loop
     hello
     case user_input
@@ -68,7 +69,7 @@ class ConsoleInterface
 
   def save_result(stats)
     puts I18n.t(:save_result)
-    save_to_db(stats) if yes?
+    save_to_db(stats, @config['db_file']) if yes?
   end
 
   def yes?

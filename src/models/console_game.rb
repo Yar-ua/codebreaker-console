@@ -11,20 +11,25 @@ class ConsoleGame
   end
 
   def run
+    puts @game.code   #####################################debug
     puts I18n.t(:input_guess)
     input = user_input
-    case input
-    when EXIT then game_exit
-    when HINT then take_hint
-    else
-      @response = @game.run(input)
-    end
+    filter_user_input(input)
   rescue StandardError => e
     notice(e.message)
     run
   end
 
   private
+
+  def filter_user_input(input)
+    case input
+    when EXIT then game_exit
+    when HINT then take_hint
+    else
+      @response = @game.run(input)
+    end
+  end
 
   def user_registration
     puts I18n.t(:user_registration)
