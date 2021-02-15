@@ -36,9 +36,8 @@ module IOHelper
   end
 
   def game_exit
-    puts I18n.t(:game_exit)
-    abort
-    # exit(0)
+    puts I18n.t(:exit_message)
+    exit(0)
   end
 
   def print_response(response)
@@ -49,5 +48,4 @@ module IOHelper
   def print_game_status(game)
     puts (I18n.t(:game_status) + game.attempts.to_s + I18n.t(:game_hints) + game.hints.to_s).colorize(:blue)
   end
-
 end

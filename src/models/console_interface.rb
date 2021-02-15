@@ -34,6 +34,8 @@ class ConsoleInterface
   def game_start
     puts I18n.t(:game_start)
     @console_game = ConsoleGame.new
+    @console_game.set_user
+    @console_game.set_game
     game_process
   end
 

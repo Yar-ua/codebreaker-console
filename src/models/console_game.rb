@@ -5,13 +5,21 @@ class ConsoleGame
   attr_reader :user, :game, :response
 
   def initialize
-    @user = user_registration
-    @game = create_game
+    @user = nil
+    @game = nil
     @response = {}
   end
 
+  def set_user
+    @user = user_registration
+  end
+
+  def set_game
+    @game = create_game
+  end
+
   def run
-    puts @game.code   #####################################debug
+    puts @game.code   # ####################################debug
     puts I18n.t(:input_guess)
     input = user_input
     filter_user_input(input)
@@ -33,7 +41,7 @@ class ConsoleGame
 
   def user_registration
     puts I18n.t(:user_registration)
-    User.new(user_input)
+    User.new(gets.chomp.strip)
   rescue StandardError => e
     notice(e.message)
     user_registration

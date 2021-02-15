@@ -1,8 +1,6 @@
 require: rubocop-rspec
 
 AllCops:
-  Exclude:
-    - 'spec/**/*'
   SuggestExtensions: false
   NewCops: enable
 Style/FrozenStringLiteralComment:

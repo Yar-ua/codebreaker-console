@@ -28,7 +28,7 @@ en:
               If all attempts are spent - codebreaker loses. 0Codebreaker also has some number of hints \n
               (depends on chosen difficulty). If a user takes a hint - he receives back a separate digit of the secret code.\n\n"
   game_statistic: "Users game statistic:\n"
-  game_exit: "Good bye!"
+  exit_message: "Good bye!"
   unknown_input: "unknown input command, try again\n\n"
   user_registration: "User registration. Input user name (3-20 symbols):\n"
   choose_level: "Choose game level: input 'easy', 'medium' or 'hard'\n"
