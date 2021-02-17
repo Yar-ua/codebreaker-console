@@ -4,7 +4,7 @@ RSpec.describe ConsoleGame do
   subject(:console_game) { described_class.new }
 
   let(:name) { 'John Sina' }
-  let(:difficulty) { 'easy' }
+  let(:difficulty) { 'hard' }
 
   describe 'have nil values when just created' do
     it { expect(subject.user).to eq(nil) }
@@ -62,8 +62,8 @@ RSpec.describe ConsoleGame do
       game_init_and_set_values
     end
 
-    it '' do
-      allow(subject).to receive(:gets).exactly(15).times.and_return('123dd', '1234')
+    it 'incorrect and correct user input' do
+      allow(subject).to receive(:gets).exactly(6).times.and_return('123dd', '1234')
       expect { subject.run }.to output { include I18n.t(:input_guess) }.to_stdout
       expect { subject.run }.not_to raise_error
     end

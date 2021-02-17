@@ -7,10 +7,6 @@ RSpec.describe SaveLoadHelper do
   let(:stats) { Stats.new(user, response) }
   let(:config) { console_interface.config['db_file'] }
 
-  after :all do
-    File.delete('./db/test_top_users.yml') if File.exist?('./db/test_top_users.yml')
-  end
-
   describe 'load empty array if DB not exists' do
     it { expect(File.exist?('./db/not_exists.yml')).to be false }
     it { expect(console_interface.load_from_db('not_exists.yml')).to eq([]) }
@@ -34,5 +30,9 @@ RSpec.describe SaveLoadHelper do
 
   def load_config
     YAML.load_file(File.expand_path('../support/config_test.yml', __dir__))
+  end
+
+  after :all do
+    File.delete('./db/test_top_users.yml') if File.exist?('./db/test_top_users.yml')
   end
 end

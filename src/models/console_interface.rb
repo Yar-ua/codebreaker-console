@@ -13,12 +13,12 @@ class ConsoleInterface
 
   def start
     welcome
-    run_loop
+    run_interface
   end
 
   private
 
-  def run_loop
+  def run_interface
     hello
     case user_input
     when START then game_start
@@ -28,7 +28,7 @@ class ConsoleInterface
     else
       unknown_input
     end
-    run_loop
+    run_interface
   end
 
   def game_start
@@ -66,7 +66,7 @@ class ConsoleInterface
 
   def new_game_or_menu
     puts I18n.t(:new_game)
-    yes? ? game_start : run_loop
+    yes? ? game_start : run_interface
   end
 
   def save_result(stats)

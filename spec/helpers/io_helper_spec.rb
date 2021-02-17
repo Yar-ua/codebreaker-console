@@ -67,6 +67,10 @@ RSpec.describe IOHelper do
       expect(console_interface.game_exit).to eq(nil)
     end
   end
+  
+  after :all do
+    File.delete('./db/test_top_users.yml') if File.exist?('./db/test_top_users.yml')
+  end
 
   def load_config
     YAML.load_file(File.expand_path('../support/config_test.yml', __dir__))
