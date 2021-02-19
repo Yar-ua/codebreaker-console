@@ -19,7 +19,6 @@ class ConsoleGame
   end
 
   def run
-    puts @game.code   # #################################### debug line
     puts I18n.t(:input_guess)
     input = user_input
     filter_user_input(input)

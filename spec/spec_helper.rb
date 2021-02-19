@@ -5,6 +5,7 @@ SimpleCov.start do
 end
 
 require_relative File.expand_path('../src/loader', File.dirname(__FILE__))
+require_relative './support/constants'
 
 RSpec.configure do |config|
   config.example_status_persistence_file_path = '.rspec_status'
@@ -17,7 +18,7 @@ RSpec.configure do |config|
   end
   config.mock_with :rspec do |mocks|
     mocks.verify_partial_doubles = true
-    mocks.syntax = [:expect, :should]
+    mocks.syntax = %i[expect should]
   end
   config.shared_context_metadata_behavior = :apply_to_host_groups
 end
