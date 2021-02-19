@@ -130,13 +130,3 @@ RSpec.describe ConsoleInterface do
     YAML.load_file(File.expand_path('../support/config_test.yml', __dir__))
   end
 end
-
-# describe '*******' do
-# it 'game start' do
-#   allow(subject.console_game).to receive(:input).with(:gets).and_return('easy')
-#   expect(console_game).to receive_message_chain(:set_user, :user_registration).with(:gets).and_return('easy')
-#   # # allow(subject).to receive(:user_registration).and_return(user) #.and_return(:ok)
-#   # expect(subject).to receive(:goto)
-#   subject.send(:game_start)
-# end
-# end
