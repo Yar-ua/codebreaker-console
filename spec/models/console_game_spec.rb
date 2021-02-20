@@ -70,7 +70,7 @@ RSpec.describe ConsoleGame do
     end
   end
 
-  describe '' do
+  describe 'recieve exit' do
     before { allow(console_game).to receive(:exit) }
 
     it { expect(console_game.send(:filter_user_input, Constants::EXIT)).to eq(nil) }

@@ -16,8 +16,8 @@ module IOHelper
   def print_statistic(sorted_stats)
     table = TTY::Table.new
     table << TABLE_HEADER
-    sorted_stats.each do |s|
-      table << [s.difficulty, s.name, s.attempts_used, s.attempts_total, s.hints_used, s.hints_total]
+    sorted_stats.each do |stat|
+      table << [stat.difficulty, stat.name, stat.attempts_used, stat.attempts_total, stat.hints_used, stat.hints_total]
     end
     puts I18n.t(:game_statistic)
     puts TTY::Table::Renderer::Unicode.new(table).render
