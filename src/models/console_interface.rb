@@ -7,7 +7,6 @@ class ConsoleInterface
 
   def initialize(config)
     @config = config
-    @console_game = nil
     @stats = load_from_db(@config['db_file'])
   end
 
@@ -35,7 +34,7 @@ class ConsoleInterface
     puts I18n.t(:game_start)
     @console_game = ConsoleGame.new
     @console_game.set_user
-    @console_game.set_game
+    @console_game.set_difficulty
     goto(:game_process)
   end
 

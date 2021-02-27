@@ -2,20 +2,22 @@ class ConsoleGame
   include IOHelper
   include Constants
 
-  attr_reader :user, :game, :response
+  attr_reader :game, :response
 
   def initialize
-    @user = nil
-    @game = nil
+    @game = Codebreaker::Game.new
     @response = {}
   end
 
   def set_user
-    @user = user_registration
+    puts I18n.t(:user_registration)
+    input = gets.chomp.strip
+    game_user_init(input)
   end
 
-  def set_game
-    @game = create_game
+  def set_difficulty
+    puts I18n.t(:choose_level)
+    game_difficulty_init(user_input)
   end
 
   def run
@@ -38,20 +40,18 @@ class ConsoleGame
     end
   end
 
-  def user_registration
-    puts I18n.t(:user_registration)
-    User.new(gets.chomp.strip)
+  def game_user_init(input)
+    @game.set_user(input)
   rescue StandardError => e
     notice(e.message)
-    user_registration
+    set_user
   end
 
-  def create_game
-    puts I18n.t(:choose_level)
-    Codebreaker::Game.new(user_input)
+  def game_difficulty_init(input)
+    @game.set_difficulty(input)
   rescue StandardError => e
     notice(e.message)
-    create_game
+    set_difficulty
   end
 
   def take_hint

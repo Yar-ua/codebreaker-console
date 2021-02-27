@@ -31,7 +31,7 @@ en:
   exit_message: "Good bye!"
   unknown_input: "unknown input command, try again\n\n"
   user_registration: "User registration. Input user name (3-20 symbols):\n"
-  choose_level: "Choose game level: input 'easy', 'medium' or 'hard'\n"
+  choose_level: "Choose game level: input 'easy', 'medium' or 'hell'\n"
   input_guess: "\nInput Your guess (4 digits between 1 and 6)\n"
   win_message: "Congratulations! You are win in the game! "
   lose_message: "You are lose win in the game -( "
