@@ -24,9 +24,7 @@ class ConsoleInterface
     when RULES then game_rules
     when STATS then game_statistic
     when EXIT then game_exit
-    else
-      unknown_input
-    end
+    else; unknown_input; end
     goto(:run_interface)
   end
 
@@ -53,7 +51,7 @@ class ConsoleInterface
 
   def win
     puts I18n.t(:win_message) + I18n.t(:secret_code) + @console_game.game.code
-    @stats << Stats.new(@console_game.user, @console_game.response[:message])
+    @stats << Stats.new(@console_game.game.user, @console_game.response[:message])
     save_result(@stats)
     new_game_or_menu
   end
@@ -79,6 +77,7 @@ class ConsoleInterface
 
   def game_statistic
     sorted_stats = @stats
+    puts sorted_stats
     sorted_stats.sort! { |a, b| [a.attempts_used, a.hints_used] <=> [b.attempts_used, b.hints_used] }
     sorted_stats.sort_by! { |d| DIFFICULTY_ORDER.index d.difficulty }
     print_statistic(sorted_stats)
