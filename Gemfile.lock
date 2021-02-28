@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/Yar-ua/codebreaker21rg
-  revision: 6afe03ec3e9c021d2084768de0da558bea720495
+  revision: 59be118920d71ffed442e44cb9a2b31291e1b5cd
   branch: dev
   specs:
-    codebreaker21rg (0.1.0)
+    codebreaker21rg (0.1.1)
       pry
       rake
 
@@ -76,6 +76,8 @@ GEM
       unicode-display_width (~> 1.5)
       unicode_utils (~> 1.4)
     strings-ansi (0.2.0)
+    terminal-table (3.0.0)
+      unicode-display_width (~> 1.1, >= 1.1.1)
     tty-color (0.6.0)
     tty-screen (0.8.1)
     tty-table (0.12.0)
@@ -98,6 +100,7 @@ DEPENDENCIES
   rubocop
   rubocop-rspec
   simplecov
+  terminal-table
   tty-table
 
 BUNDLED WITH

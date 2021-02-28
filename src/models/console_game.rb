@@ -9,13 +9,13 @@ class ConsoleGame
     @response = {}
   end
 
-  def set_user
+  def create_user
     puts I18n.t(:user_registration)
     input = gets.chomp.strip
     game_user_init(input)
   end
 
-  def set_difficulty
+  def create_difficulty
     puts I18n.t(:choose_level)
     game_difficulty_init(user_input)
   end
@@ -41,17 +41,17 @@ class ConsoleGame
   end
 
   def game_user_init(input)
-    @game.set_user(input)
+    @game.user_set(input)
   rescue StandardError => e
     notice(e.message)
-    set_user
+    create_user
   end
 
   def game_difficulty_init(input)
-    @game.set_difficulty(input)
+    @game.difficulty_set(input)
   rescue StandardError => e
     notice(e.message)
-    set_difficulty
+    create_difficulty
   end
 
   def take_hint

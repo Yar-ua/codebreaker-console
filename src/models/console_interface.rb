@@ -18,30 +18,32 @@ class ConsoleInterface
   private
 
   def run_interface
-    hello
-    case user_input
-    when START then game_start
-    when RULES then game_rules
-    when STATS then game_statistic
-    when EXIT then game_exit
-    else; unknown_input; end
-    goto(:run_interface)
+    loop do
+      hello
+      case user_input
+      when START then game_start
+      when RULES then game_rules
+      when STATS then game_statistic
+      when EXIT then game_exit
+      else; unknown_input; end
+    end
   end
 
   def game_start
     puts I18n.t(:game_start)
     @console_game = ConsoleGame.new
-    @console_game.set_user
-    @console_game.set_difficulty
-    goto(:game_process)
+    @console_game.create_user
+    @console_game.create_difficulty
+    game_process
   end
 
   def game_process
-    @console_game.run
-    check_response
-    print_game_status(@console_game.game)
-    print_response(@console_game.response)
-    goto(:game_process)
+    loop do
+      @console_game.run
+      check_response
+      print_game_status(@console_game.game)
+      print_response(@console_game.response)
+    end
   end
 
   def check_response
@@ -77,13 +79,8 @@ class ConsoleInterface
 
   def game_statistic
     sorted_stats = @stats
-    puts sorted_stats
     sorted_stats.sort! { |a, b| [a.attempts_used, a.hints_used] <=> [b.attempts_used, b.hints_used] }
     sorted_stats.sort_by! { |d| DIFFICULTY_ORDER.index d.difficulty }
     print_statistic(sorted_stats)
-  end
-
-  def goto(method)
-    send(method)
   end
 end

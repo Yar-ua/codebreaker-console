@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe Stats do
   subject(:stats) { described_class.new(user, result) }
 
-  let(:user) { User.new('username') }
+  let(:user) { Codebreaker::User.new('username') }
   let(:result) { { difficulty: 'easy', attempts_total: 15, attempts_used: 3, hints_total: 2, hints_used: 1 } }
 
   describe 'have all values after initialization' do

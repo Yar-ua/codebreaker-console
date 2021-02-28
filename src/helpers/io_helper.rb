@@ -14,13 +14,14 @@ module IOHelper
   end
 
   def print_statistic(sorted_stats)
-    table = TTY::Table.new
+    table = Terminal::Table.new
     table << TABLE_HEADER
+    table.add_separator
     sorted_stats.each do |stat|
       table << [stat.difficulty, stat.name, stat.attempts_used, stat.attempts_total, stat.hints_used, stat.hints_total]
     end
     puts I18n.t(:game_statistic)
-    puts TTY::Table::Renderer::Unicode.new(table).render
+    puts table
   end
 
   def unknown_input

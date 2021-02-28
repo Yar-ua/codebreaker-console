@@ -2,14 +2,14 @@ require 'spec_helper'
 
 RSpec.describe SaveLoadHelper do
   let(:console_interface) { ConsoleInterface.new(load_config) }
-  let(:user) { User.new('username') }
+  let(:user) { Codebreaker::User.new('username') }
   let(:response) { { difficulty: 'easy', attempts_total: 15, attempts_used: 3, hints_total: 2, hints_used: 1 } }
   let(:stats) { Stats.new(user, response) }
   let(:config) { console_interface.config['db_file'] }
 
   describe 'load empty array if DB not exists' do
-    it { expect(File.exist?(Constants::WRONG_DB_PATH)).to be false }
-    it { expect(console_interface.load_from_db(Constants::WRONG_FILENAME)).to eq([]) }
+    it { expect(File.exist?('./db/not_exist.yml')).to be false }
+    it { expect(console_interface.load_from_db('not_exist.yml')).to eq([]) }
   end
 
   describe 'save to DB' do

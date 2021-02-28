@@ -4,7 +4,7 @@ en:
   game_hello: "Make your choice\n
                'start' - for start game\n
                'rules' - for game rules\n
-               'stats' - for game statistoc of players\n
+               'stats' - for game statistic of players\n
                'exit' - for game exit\n\n"
   game_rules: "Game Rules:\n
               Codebreaker is a logic game in which a code-breaker tries to break a secret code \n

@@ -2,59 +2,56 @@ require 'spec_helper'
 
 RSpec.describe ConsoleGame do
   let(:console_game) { described_class.new }
-  let(:name) { 'John Sina' }
-  let(:difficulty) { 'hard' }
+  let(:name) { 'Benny' }
+  let(:difficulty) { 'hell' }
 
-  describe 'have nil values when just created' do
-    it { expect(console_game.user).to eq(nil) }
-    it { expect(console_game.game).to eq(nil) }
-  end
-
-  describe 'set user value through' do
+  describe 'create game user' do
     before do
-      allow(console_game).to receive(:gets).and_return('1', name)
-      console_game.set_user
-    end
-
-    it 'rescue error' do
-      expect { console_game.set_user }.not_to raise_error
-    end
-
-    it 'rescue with message' do
-      expect { console_game.set_user }.to output { include ConsoleInterface::USER_ERROR }.to_stdout
-    end
-
-    it 'user registration' do
-      expect { console_game.set_user }.to output { include I18n.t(:user_registration) }.to_stdout
-    end
-
-    it 'have name' do
-      expect(console_game.user.name).to eq(name)
-    end
-  end
-
-  describe 'set game and difficulty' do
-    before do
-      allow(console_game).to receive(:gets).and_return(Constants::UNKNOWN_INPUT, difficulty)
-      console_game.set_game
+      allow(console_game).to receive(:gets).and_return('a', name)
+      console_game.create_user
     end
 
     it 'rescue error with message' do
-      expect { console_game.set_game }.not_to raise_error
+      expect { console_game.create_user }.not_to raise_error
     end
 
     it 'with error message' do
-      expect { console_game.set_game }.to output {
-                                            include Codebreaker::ValidationHelper::INCORRECT_DIFFICULTY
-                                          }.to_stdout
+      expect { console_game.create_user }.to output {
+                                               include Codebreaker::ValidationHelper::NAME_SIZE
+                                             }.to_stdout
     end
 
     it 'game creation' do
-      expect { console_game.set_game }.to output { include I18n.t(:choose_level) }.to_stdout
+      expect { console_game.create_user }.to output { include I18n.t(:user_registration) }.to_stdout
     end
 
     it 'with correct difficulty' do
-      expect(console_game.game.difficulty).to eq(difficulty)
+      expect(console_game.game.user.name).to eq(name)
+    end
+  end
+
+  describe 'create game difficulty' do
+    before do
+      allow(console_game).to receive(:gets).and_return('unknown', difficulty)
+      console_game.create_difficulty
+    end
+
+    it 'rescue error with message' do
+      expect { console_game.create_difficulty }.not_to raise_error
+    end
+
+    it 'with error message' do
+      expect { console_game.create_difficulty }.to output {
+                                                     include Codebreaker::ValidationHelper::INCORRECT_DIFFICULTY
+                                                   }.to_stdout
+    end
+
+    it 'game creation' do
+      expect { console_game.create_difficulty }.to output { include I18n.t(:choose_level) }.to_stdout
+    end
+
+    it 'with correct difficulty' do
+      expect(console_game.game.difficulty.type).to eq(difficulty)
     end
   end
 
@@ -94,7 +91,7 @@ RSpec.describe ConsoleGame do
 
   def game_init_and_set_values
     allow(console_game).to receive(:gets).and_return(name, difficulty)
-    console_game.set_user
-    console_game.set_game
+    console_game.create_user
+    console_game.create_difficulty
   end
 end

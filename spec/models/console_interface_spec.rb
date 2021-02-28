@@ -7,7 +7,7 @@ RSpec.describe ConsoleInterface do
   let(:user) { User.new('John Sina') }
   let(:win_response) do
     { status: :win,
-      message: { difficulty: Constants::EASY, attempts_total: 15, attempts_used: 3, hints_total: 2, hints_used: 1 } }
+      message: { difficulty: 'easy', attempts_total: 15, attempts_used: 3, hints_total: 2, hints_used: 1 } }
   end
 
   after do
@@ -16,10 +16,10 @@ RSpec.describe ConsoleInterface do
 
   describe 'have nil values when just created' do
     it { expect(console_interface.config).to eq(load_config) }
-    it { expect(console_interface.console_game).to eq(nil) }
+    it { expect(console_interface.stats).not_to eq(nil) }
   end
 
-  describe 'when run interface' do
+  describe 'start interface' do
     it 'have welcome' do
       allow(console_interface).to receive(:run_interface).and_return(:exit)
       allow(console_interface).to receive(:welcome)
@@ -29,7 +29,7 @@ RSpec.describe ConsoleInterface do
   end
 
   describe 'run interface loop' do
-    before { allow(console_interface).to receive(:goto) }
+    before { allow(console_interface).to receive(:loop).and_yield }
 
     it 'rules' do
       allow(console_interface).to receive(:user_input).and_return(Constants::RULES)
@@ -53,7 +53,7 @@ RSpec.describe ConsoleInterface do
     end
 
     it 'unknown input' do
-      allow(console_interface).to receive(:user_input).and_return(Constants::UNKNOWN_INPUT)
+      allow(console_interface).to receive(:user_input).and_return('unknown')
       allow(console_interface).to receive(:unknown_input)
       console_interface.send(:run_interface)
       expect(console_interface).to have_received(:unknown_input)
@@ -69,15 +69,15 @@ RSpec.describe ConsoleInterface do
 
   describe 'IO interface methods' do
     before do
-      console_game.instance_variable_set(:@user, User.new(Constants::USERNAME))
-      console_game.instance_variable_set(:@game, Codebreaker::Game.new(Constants::EASY))
+      console_game.send(:game_user_init, 'username')
+      console_game.send(:game_difficulty_init, 'easy')
       console_interface.instance_variable_set(:@console_game, console_game)
+      allow(console_interface).to receive(:loop).and_yield
     end
 
     it 'game process' do
       allow(console_interface.console_game).to receive(:run).and_return(:ok)
       allow(console_interface).to receive(:print_response)
-      allow(console_interface).to receive(:goto)
       console_interface.send(:game_process)
     end
 
@@ -103,7 +103,7 @@ RSpec.describe ConsoleInterface do
     end
 
     it 'menu' do
-      allow(console_interface).to receive(:user_input).and_return(Constants::NO)
+      allow(console_interface).to receive(:user_input).and_return('no')
       allow(console_interface).to receive(:run_interface)
       console_interface.send(:new_game_or_menu)
     end
@@ -119,11 +119,6 @@ RSpec.describe ConsoleInterface do
   it 'yes?' do
     allow(console_interface).to receive(:user_input).and_return(Constants::YES)
     expect(console_interface.send(:yes?)).to eq(true)
-  end
-
-  it 'goto' do
-    allow(console_interface).to receive(:start)
-    console_interface.send(:goto, Constants::START)
   end
 
   def load_config

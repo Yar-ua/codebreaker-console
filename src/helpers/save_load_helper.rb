@@ -8,6 +8,6 @@ module SaveLoadHelper
   def load_from_db(db_file)
     return [] unless File.exist?(DB_DIR + db_file)
 
-    File.open(DB_DIR + db_file) { |file| YAML.load(file) }
+    File.open(DB_DIR + db_file) { |file| YAML.safe_load(file, [Stats, Symbol], [], true) }
   end
 end

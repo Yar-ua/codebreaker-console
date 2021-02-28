@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe IOHelper do
   let(:console_interface) { ConsoleInterface.new(load_config) }
-  let(:user) { User.new('username') }
+  let(:user) { Codebreaker::User.new('username') }
 
   after do
     File.delete('./db/test_top_users.yml') if File.exist?('./db/test_top_users.yml')
@@ -29,20 +29,21 @@ RSpec.describe IOHelper do
   describe 'print codebreaker gem response' do
     it 'for :ok message' do
       expect do
-        console_interface.print_response(Constants::GAME_RESPONSE)
-      end.to output(include Constants::GAME_RESPONSE[:message]).to_stdout
+        console_interface.print_response({ status: :ok, message: '++--' })
+      end.to output(include '++--').to_stdout
     end
 
     it 'for :hint message' do
       expect do
-        console_interface.print_response(Constants::HINT_RESPONSE)
-      end.to output(include Constants::HINT_RESPONSE[:message]).to_stdout
+        console_interface.print_response({ status: :hint, message: '5' })
+      end.to output(include '5').to_stdout
     end
   end
 
   describe 'print statistic' do
-    let(:print_statistic) { console_interface.print_statistic([Stats.new(user, response)]) }
-    let(:response) { { difficulty: 'easy', attempts_total: 15, attempts_used: 3, hints_total: 2, hints_used: 1 } }
+    let(:stats) { Stats.new(user, result) }
+    let(:result) { { difficulty: 'easy', attempts_total: 15, attempts_used: 3, hints_total: 2, hints_used: 1 } }
+    let(:print_statistic) { console_interface.print_statistic([stats]) }
 
     it 'message' do
       expect { print_statistic }.to output { include I18n.t(:game_statistic) }.to_stdout
@@ -50,7 +51,9 @@ RSpec.describe IOHelper do
   end
 
   describe 'print game status' do
-    let(:c_game) { Codebreaker::Game.new('easy') }
+    let(:c_game) { Codebreaker::Game.new }
+
+    before { c_game.difficulty_set('easy') }
 
     it 'message and values' do
       expect do
