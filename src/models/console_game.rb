@@ -12,19 +12,22 @@ class ConsoleGame
   def create_user
     puts I18n.t(:user_registration)
     input = gets.chomp.strip
+    game_exit if input == EXIT
     game_user_init(input)
   end
 
   def create_difficulty
     puts I18n.t(:choose_level)
-    game_difficulty_init(user_input)
+    input = gets.chomp.strip
+    game_exit if input == EXIT
+    game_difficulty_init(input)
   end
 
   def run
     puts I18n.t(:input_guess)
     input = user_input
     filter_user_input(input)
-  rescue StandardError => e
+  rescue ArgumentError, WrongTypeError, GameError => e
     notice(e.message)
     run
   end
@@ -42,14 +45,14 @@ class ConsoleGame
 
   def game_user_init(input)
     @game.user_set(input)
-  rescue StandardError => e
+  rescue UserError => e
     notice(e.message)
     create_user
   end
 
   def game_difficulty_init(input)
     @game.difficulty_set(input)
-  rescue StandardError => e
+  rescue GameError => e
     notice(e.message)
     create_difficulty
   end
