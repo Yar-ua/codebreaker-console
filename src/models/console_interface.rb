@@ -47,8 +47,8 @@ class ConsoleInterface
   end
 
   def check_response
-    win if @console_game.response[:status] == :win
-    lose if @console_game.response[:status] == :lose
+    win if @console_game.response[:status] == WIN
+    lose if @console_game.response[:status] == LOSE
   end
 
   def win
@@ -79,8 +79,10 @@ class ConsoleInterface
 
   def game_statistic
     sorted_stats = @stats
-    sorted_stats.sort! { |a, b| [a.attempts_used, a.hints_used] <=> [b.attempts_used, b.hints_used] }
-    sorted_stats.sort_by! { |d| DIFFICULTY_ORDER.index d.difficulty }
+    sorted_stats.sort! do |left_item, right_item|
+      [left_item.attempts_used, left_item.hints_used] <=> [right_item.attempts_used, right_item.hints_used]
+    end
+    sorted_stats.sort_by! { |item| DIFFICULTY_ORDER.index item.difficulty }
     print_statistic(sorted_stats)
   end
 end

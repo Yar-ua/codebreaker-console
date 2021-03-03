@@ -7,4 +7,9 @@ module Constants
   EXIT = 'exit'.freeze
   HINT = 'hint'.freeze
   YES = 'yes'.freeze
+
+  OK = :ok
+  HINT = :hint
+  WIN = :win
+  LOSE = :lose
 end
