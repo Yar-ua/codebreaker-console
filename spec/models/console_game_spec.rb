@@ -4,6 +4,8 @@ RSpec.describe ConsoleGame do
   let(:console_game) { described_class.new }
   let(:name) { 'Benny' }
   let(:difficulty) { 'hell' }
+  let(:invalid_guess) { '123dd' }
+  let(:valid_guess) { '1234' }
 
   describe 'create game user' do
     before do
@@ -63,7 +65,7 @@ RSpec.describe ConsoleGame do
     end
 
     it 'return response from Codebreaker gem' do
-      expect(console_game.send(:filter_user_input, '1234')[:status]).to eq(:ok)
+      expect(console_game.send(:filter_user_input, valid_guess)[:status]).to eq(:ok)
     end
   end
 
@@ -82,7 +84,7 @@ RSpec.describe ConsoleGame do
   describe 'run' do
     before do
       game_init_and_set_values
-      allow(console_game).to receive(:gets).exactly(6).times.and_return('123dd', '1234')
+      allow(console_game).to receive(:gets).exactly(6).times.and_return(invalid_guess, valid_guess)
     end
 
     it { expect { console_game.run }.to output { include I18n.t(:input_guess) }.to_stdout }

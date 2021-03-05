@@ -5,11 +5,10 @@ module Constants
   RULES = 'rules'.freeze
   STATS = 'stats'.freeze
   EXIT = 'exit'.freeze
-  HINT = 'hint'.freeze
   YES = 'yes'.freeze
 
-  OK = :ok
-  HINT = :hint
-  WIN = :win
-  LOSE = :lose
+  OK = Codebreaker::Game::OK
+  HINT = Codebreaker::Game::HINT
+  WIN = Codebreaker::Game::WIN
+  LOSE = Codebreaker::Game::LOSE
 end
