@@ -6,9 +6,4 @@ module Constants
   STATS = 'stats'.freeze
   EXIT = 'exit'.freeze
   YES = 'yes'.freeze
-
-  OK = Codebreaker::Game::OK
-  HINT = Codebreaker::Game::HINT
-  WIN = Codebreaker::Game::WIN
-  LOSE = Codebreaker::Game::LOSE
 end

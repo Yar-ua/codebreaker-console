@@ -37,7 +37,7 @@ class ConsoleGame
   def filter_user_input(input)
     case input
     when EXIT then game_exit
-    when HINT then take_hint
+    when Codebreaker::Game::HINT.to_s then take_hint
     else
       @response = @game.run(input)
     end

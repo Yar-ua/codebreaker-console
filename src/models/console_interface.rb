@@ -47,8 +47,8 @@ class ConsoleInterface
   end
 
   def check_response
-    win if @console_game.response[:status] == WIN
-    lose if @console_game.response[:status] == LOSE
+    win if @console_game.response[:status] == Codebreaker::Game::WIN
+    lose if @console_game.response[:status] == Codebreaker::Game::LOSE
   end
 
   def win

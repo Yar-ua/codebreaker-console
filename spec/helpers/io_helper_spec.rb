@@ -29,13 +29,14 @@ RSpec.describe IOHelper do
   describe 'print codebreaker gem response' do
     it 'for :ok message' do
       expect do
-        console_interface.print_response({ status: :ok, message: Codebreaker::Game::PLUS + Codebreaker::Game::MINUS })
+        console_interface.print_response({ status: Codebreaker::Game::OK,
+                                           message: Codebreaker::Game::PLUS + Codebreaker::Game::MINUS })
       end.to output(include Codebreaker::Game::PLUS + Codebreaker::Game::MINUS).to_stdout
     end
 
     it 'for :hint message' do
       expect do
-        console_interface.print_response({ status: :hint, message: '5' })
+        console_interface.print_response({ status: Codebreaker::Game::HINT, message: '5' })
       end.to output(include '5').to_stdout
     end
   end

@@ -3,10 +3,10 @@ require 'spec_helper'
 RSpec.describe ConsoleInterface do
   let(:console_interface) { described_class.new(load_config) }
   let(:console_game) { ConsoleGame.new }
-  let(:lose_response) { { status: Constants::LOSE } }
+  let(:lose_response) { { status: Codebreaker::Game::LOSE } }
   let(:user) { User.new('John Sina') }
   let(:win_response) do
-    { status: Constants::WIN,
+    { status: Codebreaker::Game::WIN,
       message: { difficulty: 'easy', attempts_total: 15, attempts_used: 3, hints_total: 2, hints_used: 1 } }
   end
 
@@ -76,7 +76,7 @@ RSpec.describe ConsoleInterface do
     end
 
     it 'game process' do
-      allow(console_interface.console_game).to receive(:run).and_return(:ok)
+      allow(console_interface.console_game).to receive(:run).and_return(Codebreaker::Game::OK)
       allow(console_interface).to receive(:print_response)
       console_interface.send(:game_process)
     end

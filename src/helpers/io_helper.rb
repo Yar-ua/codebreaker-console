@@ -42,8 +42,8 @@ module IOHelper
   end
 
   def print_response(response)
-    puts response[:message].colorize(:green) if response[:status] == OK
-    puts (I18n.t(:hint) + response[:message].to_s).colorize(:green) if response[:status] == HINT
+    puts response[:message].colorize(:green) if response[:status] == Codebreaker::Game::OK
+    puts (I18n.t(:hint) + response[:message].to_s).colorize(:green) if response[:status] == Codebreaker::Game::HINT
   end
 
   def print_game_status(game)

@@ -61,11 +61,12 @@ RSpec.describe ConsoleGame do
     before { game_init_and_set_values }
 
     it 'take a hint' do
-      expect(console_game.send(:filter_user_input, Constants::HINT)[:status]).to eq(:hint)
+      expect(console_game.send(:filter_user_input,
+                               Codebreaker::Game::HINT.to_s)[:status]).to eq(Codebreaker::Game::HINT)
     end
 
     it 'return response from Codebreaker gem' do
-      expect(console_game.send(:filter_user_input, valid_guess)[:status]).to eq(:ok)
+      expect(console_game.send(:filter_user_input, valid_guess)[:status]).to eq(Codebreaker::Game::OK)
     end
   end
 
